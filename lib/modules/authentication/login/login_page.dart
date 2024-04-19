@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:nutri_fast/core/routes/app_pages.dart';
@@ -49,7 +48,7 @@ class LoginPage extends GetView<LoginController> {
                                   width: constraints.maxWidth,
                                   height: 50,
                                   onPress: () {
-                                    Get.toNamed(AppPages.home);
+                                    Get.offAllNamed(AppPages.home);
                                   },
                                   text: "Entrar"),
                               const SizedBox(height: 20),
