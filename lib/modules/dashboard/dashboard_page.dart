@@ -13,19 +13,24 @@ class DashboardPage extends GetView<DashboardController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: ElevatedButton(
+        onPressed: () {},
+        child: Text("Aqui"),
+      ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(top: 48),
+        padding: const EdgeInsets.only(top: 48),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               "Total de calorias consumidas(semana)",
               style: TextStyle(fontSize: 18),
             ),
-            Text(
-              controller.totalCalories.toString(),
-              style: TextStyle(fontSize: 35, fontWeight: FontWeight.w700),
-            ),
+            Obx(() => Text(
+                  controller.totalCalories.toString(),
+                  style: const TextStyle(
+                      fontSize: 35, fontWeight: FontWeight.w700),
+                )),
             Obx(() => loadGrafico()),
             Obx(
               () {
@@ -57,7 +62,7 @@ class DashboardPage extends GetView<DashboardController> {
         ? Container(
             width: Get.width,
             height: 200,
-            child: Center(
+            child: const Center(
               child: CircularProgressIndicator(),
             ),
           )
@@ -86,29 +91,38 @@ class DashboardPage extends GetView<DashboardController> {
   }
 
   List<PieChartSectionData> showingSections() {
-    int totalCalories = controller.listfoods!
-        .map((food) => food.calories)
-        .reduce((value, element) => value + element);
+    if (controller.listfoods == null || controller.listfoods!.isEmpty) {
+      return [];
+    }
+
+    Map<String, int> caloriesByCategory = {};
+    int totalCalories = 0;
+    for (var food in controller.listfoods!) {
+      caloriesByCategory[food.type] ??= 0;
+      caloriesByCategory[food.type] =
+          caloriesByCategory[food.type]! + food.calories;
+      totalCalories += food.calories;
+    }
 
     List<double> percentages = [];
-    for (var food in controller.listfoods!) {
-      double percentage = (food.calories / totalCalories) * 100;
+    for (var category in caloriesByCategory.keys) {
+      double percentage = (caloriesByCategory[category]! / totalCalories) * 100;
       percentages.add(percentage);
     }
 
     List<PieChartSectionData> sections =
-        List.generate(controller.listfoods!.length, (i) {
+        List.generate(caloriesByCategory.length, (i) {
       final isTouched = i == 1;
       final fontSize = isTouched ? 25.0 : 16.0;
       final radius = isTouched ? 60.0 : 50.0;
       const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
-
-      const colors = [Colors.red, Colors.amber];
+      final category = caloriesByCategory.keys.elementAt(i);
 
       return PieChartSectionData(
-        color: colors[i],
+        color: Color((Random().nextDouble() * 0xFFFFFF).toInt() << 0)
+            .withOpacity(1.0),
         value: percentages[i],
-        title: '${percentages[i].toStringAsFixed(1)}%',
+        title: '$category: ${percentages[i].toStringAsFixed(1)}%',
         radius: radius,
         titleStyle: TextStyle(
           fontSize: fontSize,

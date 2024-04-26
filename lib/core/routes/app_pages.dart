@@ -5,6 +5,7 @@ import 'package:nutri_fast/modules/Home/home_pages.dart';
 import 'package:nutri_fast/modules/authentication/authentication_pages.dart';
 import 'package:nutri_fast/modules/food/food_bindings.dart';
 import 'package:nutri_fast/modules/food/food_page.dart';
+import 'package:nutri_fast/modules/nutritionist/nutritionist_pages.dart';
 
 class AppPages {
   static const String home = '/home';
@@ -13,6 +14,7 @@ class AppPages {
   static final routes = [
     ...AuthenticationPages.routes,
     ...HomePages.routes,
+    ...NutritionistPages.routes,
     GetPage(
       name: food,
       page: () => const FoodPage(),

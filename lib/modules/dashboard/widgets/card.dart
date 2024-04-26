@@ -13,7 +13,7 @@ class CardFood extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Get.toNamed(
-          AppPages.food,
+          AppPages.food,arguments: item
         );
       },
       child: Container(
@@ -65,7 +65,7 @@ class CardFood extends StatelessWidget {
                   const SizedBox(height: 8),
                   Expanded(
                     child: Text(
-                      item.type,
+                      "Tipo: ${item.type}",
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       // style: ThemeFont.h5.apply(color: ThemeColor.black),
@@ -75,18 +75,26 @@ class CardFood extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-                width: MediaQuery.of(context).size.width * .20,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  // color: ThemeColor.purple,
+            Column(
+              children: [
+                const SizedBox(
+                  height: 5,
                 ),
-                child: Center(
-                  child: Text(item.calories.toString(),
-                      // child: Text('item.value',
-                      // style: ThemeFont.h4.apply(color: ThemeColor.greyLight),
-                      textAlign: TextAlign.center),
-                )),
+                Text("Calorias"),
+                Container(
+                    width: MediaQuery.of(context).size.width * .20,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      // color: ThemeColor.purple,
+                    ),
+                    child: Center(
+                      child: Text(item.calories.toString(),
+                          // child: Text('item.value',
+                          // style: ThemeFont.h4.apply(color: ThemeColor.greyLight),
+                          textAlign: TextAlign.center),
+                    )),
+              ],
+            ),
           ],
         ),
       ),

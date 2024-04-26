@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:nutri_fast/core/widgets/button_nav_custom.dart';
-import 'package:nutri_fast/modules/nutritionist/nutritionist_page.dart';
+import 'package:nutri_fast/modules/nutritionist/nutritionist/nutritionist_page.dart';
 import 'package:nutri_fast/modules/profile/profile_page.dart';
 
 class HomeController extends GetxController {
