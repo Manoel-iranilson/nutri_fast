@@ -33,24 +33,73 @@ class RegisterPage extends GetView<RegisterController> {
                           child: Image(image: AssetImage(AppImages.logo)),
                         ),
                       ),
-                      Expanded(
+                      Form(
+                        key: controller.formKey,
                         child: Padding(
                           padding: const EdgeInsets.all(32),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const InputTextField(label: "Telefone"),
+                              InputTextField(
+                                label: "Telefone",
+                                onChanged: (value) => {},
+                              ),
                               const SizedBox(height: 10),
-                              const InputTextField(label: "Email"),
+                              InputTextField(
+                                label: "Email",
+                                onChanged: (value) {
+                                  controller.email = value;
+                                },
+                                validator: (value) {
+                                  const pattern =
+                                      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                                  RegExp regex = RegExp(pattern);
+                                  if (!regex.hasMatch(value!)) {
+                                    return 'Insira um email válido';
+                                  }
+                                  return null;
+                                },
+                              ),
                               const SizedBox(height: 10),
-                              const InputTextField(label: "Senha"),
+                              InputTextField(
+                                label: "Senha",
+                                onChanged: (value) {
+                                  controller.password = value;
+                                },
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Insira sua senha";
+                                  }
+                                  if (value.length < 6) {
+                                    return "A senha deve conter no mínimo 6 caracteres";
+                                  }
+                                  return null;
+                                },
+                              ),
                               const SizedBox(height: 10),
-                              const InputTextField(label: "Confirme sua senha"),
+                              InputTextField(
+                                label: "Confirme sua senha",
+                                onChanged: (value) =>
+                                    controller.confirmPassword = value,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Confirme sua senha";
+                                  }
+                                  if (value != controller.password) {
+                                    return "A senha não são iguais";
+                                  }
+                                  return null;
+                                },
+                              ),
                               const SizedBox(height: 40),
                               Button(
                                   width: constraints.maxWidth,
                                   height: 40,
-                                  onPress: () {},
+                                  onPress: () {
+                                    if (controller.validate()) {
+                                      controller.register();
+                                    }
+                                  },
                                   text: "Cadastra-se"),
                               const SizedBox(height: 10),
                               Button(

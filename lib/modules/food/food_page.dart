@@ -11,7 +11,7 @@ class FoodPage extends GetView<FoodController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(controller.food!.nome),
+        title: Text(controller.food!.name),
       ),
       body: Container(
         padding: const EdgeInsets.all(8),
@@ -46,7 +46,7 @@ class FoodPage extends GetView<FoodController> {
               style: TextStyle(fontSize: 20),
             ),
             Column(
-                children: controller.food!.ingredientes
+                children: controller.food!.ingredients
                     .map((item) => Text(
                           " - $item",
                           style: TextStyle(fontSize: 20),

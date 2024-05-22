@@ -9,7 +9,7 @@ class FoodRepositoryImpl implements FoodRepository {
   @override
   Future<List<FoodModel>> getFoods() async {
     try {
-      final response = await http.get(Uri.parse("$baseApi/foods"));
+      final response = await http.get(Uri.parse("$baseApi/food"));
 
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);

@@ -19,9 +19,9 @@ class NutritionistController extends GetxController {
 
   getNutritionists() async {
     try {
-      final List<NutritionistModel>? nutritionists =
-          await nutritionistRepository.getNutritionists();
-      _listNutritionists(nutritionists);
+      // final List<NutritionistModel>? nutritionists =
+      //     await nutritionistRepository.getNutritionists();
+      // _listNutritionists(nutritionists);
     } catch (e) {
       print(e);
     } finally {

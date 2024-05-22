@@ -37,7 +37,7 @@ class DashboardPage extends GetView<DashboardController> {
                 if (controller.loading) {
                   return const Center(child: CircularProgressIndicator());
                 }
-                if (controller.listfoods!.isEmpty) {
+                if (controller.listfoods == null) {
                   return const Center(
                     child: Text("Não há Refeições"),
                   );

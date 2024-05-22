@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:nutri_fast/core/routes/app_pages.dart';
@@ -40,26 +42,65 @@ class LoginPage extends GetView<LoginController> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const InputTextField(label: "Email"),
-                              const SizedBox(height: 10),
-                              const InputTextField(label: "Senha"),
-                              const SizedBox(height: 40),
-                              Button(
-                                  width: constraints.maxWidth,
-                                  height: 50,
-                                  onPress: () {
-                                    Get.offAllNamed(AppPages.home);
-                                  },
-                                  text: "Entrar"),
-                              const SizedBox(height: 20),
-                              Button(
-                                  width: constraints.maxWidth,
-                                  height: 60,
-                                  type: AZButtonTypes.outline,
-                                  onPress: () {
-                                    Get.toNamed(AuthenticationPages.register);
-                                  },
-                                  text: "Registra-se"),
+                              Form(
+                                key: controller.formKey,
+                                child: Column(
+                                  children: [
+                                    const SizedBox(height: 10),
+                                    InputTextField(
+                                      label: "Email",
+                                      onChanged: (value) {
+                                        controller.email = value;
+                                      },
+                                      validator: (value) {
+                                        const pattern =
+                                            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                                        RegExp regex = RegExp(pattern);
+                                        if (!regex.hasMatch(value!)) {
+                                          return 'Insira um email válido';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                    const SizedBox(height: 10),
+                                    InputTextField(
+                                      label: "Senha",
+                                      onChanged: (value) {
+                                        controller.password = value;
+                                      },
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return "Insira sua senha";
+                                        }
+                                        if (value.length < 6) {
+                                          return "A senha deve conter no mínimo 6 caracteres";
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                    const SizedBox(height: 40),
+                                    Button(
+                                        width: constraints.maxWidth,
+                                        height: 50,
+                                        onPress: () {
+                                          if (controller.validate()) {
+                                            controller.login();
+                                          }
+                                        },
+                                        text: "Entrar"),
+                                    const SizedBox(height: 20),
+                                    Button(
+                                        width: constraints.maxWidth,
+                                        height: 60,
+                                        type: AZButtonTypes.outline,
+                                        onPress: () {
+                                          Get.toNamed(
+                                              AuthenticationPages.register);
+                                        },
+                                        text: "Registra-se"),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),

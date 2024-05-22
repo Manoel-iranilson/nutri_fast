@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class RegisterParams {
   final String email;
   final String password;
@@ -20,4 +22,5 @@ class RegisterParams {
       password: map['password'],
     );
   }
+  String toJson() => jsonEncode(toMap());
 }

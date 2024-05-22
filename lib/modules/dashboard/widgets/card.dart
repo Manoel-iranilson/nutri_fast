@@ -12,9 +12,7 @@ class CardFood extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(
-          AppPages.food,arguments: item
-        );
+        Get.toNamed(AppPages.food, arguments: item);
       },
       child: Container(
         width: MediaQuery.of(context).size.width - 30,
@@ -59,7 +57,7 @@ class CardFood extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    item.nome,
+                    item.name,
                     // style: ThemeFont.h3.apply(color: ThemeColor.black),
                   ),
                   const SizedBox(height: 8),
